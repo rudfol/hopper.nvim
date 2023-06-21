@@ -91,6 +91,12 @@ local function set_unmatched_lines(buf_handle, hl_ns, top_line, bottom_line, cur
   local start_col = 0
   local end_col = nil
 
+  -- invalid 'col' out of range bug fix
+  if #vim.api.nvim_get_current_line() == 0 then
+    cursor_pos[2] = cursor_pos[2] - 1
+  end
+  -- bug fix end
+  
   if direction == hint.HintDirection.AFTER_CURSOR then
     start_col = cursor_pos[2]
   elseif direction == hint.HintDirection.BEFORE_CURSOR then
